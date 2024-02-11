@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e74529c9-28bf-4a69-b81d-d8930d75d783" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-config/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-entity/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-gw/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-server/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-todo/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-users/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/planner-utils/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-    </list>
+    <list default="true" id="e74529c9-28bf-4a69-b81d-d8930d75d783" name="Changes" comment="DEVGURU project" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -149,6 +132,17 @@
       <option name="presentableId" value="Default" />
       <updated>1707047508248</updated>
     </task>
+<<<<<<< HEAD
+=======
+    <task id="LOCAL-00001" summary="DEVGURU project">
+      <created>1707655839112</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1707655839112</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+>>>>>>> b560c33 (DEVGURU project)
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -175,6 +169,13 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="DEVGURU project" />
+    <option name="LAST_COMMIT_MESSAGE" value="DEVGURU project" />
+  </component>
+>>>>>>> b560c33 (DEVGURU project)
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>

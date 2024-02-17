@@ -21,7 +21,6 @@
     <modules>
         <module>planner-entity</module>
         <module>planner-utils</module>
-        <module>planner-config</module>
         <module>planner-users</module>
         <module>planner-todo</module>
         <module>planner-server</module>

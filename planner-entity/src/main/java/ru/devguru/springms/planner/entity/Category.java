@@ -13,14 +13,14 @@ import java.util.Objects;
 
 /*
 
-справочноное значение - категория пользователя
+справочное значение - категория пользователя
 может использовать для своих задач
 содержит статистику по каждой категории
 
  */
 
 @Entity
-@Table(name = "category", schema = "todo", catalog = "todo_affairs")
+@Table(name = "category", schema = "todolist", catalog = "planner_todo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

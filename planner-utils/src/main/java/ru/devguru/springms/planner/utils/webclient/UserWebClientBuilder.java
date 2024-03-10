@@ -11,9 +11,9 @@ public class UserWebClientBuilder {
 
 
     // url мс, куда будет обращение
-    private static final String baseUrlUser = "http://localhost:8778/todo-users/users/"; // это url сервиса внутри модуля users, 8778 - порт api/gateway
+    private static final String baseUrlUser = "http://localhost:8888/planner-users/users/"; // это url сервиса внутри модуля users, 8778 - порт api/gateway
 
-    private static final String baseUrlData = "http://localhost:8778/todo-affairs/testData/";
+    private static final String baseUrlData = "http://localhost:8888/planner-todo/testData/";
 
     // синхронный метод для проверки наличия user
     public boolean userExistSync(Long userId) {
@@ -35,30 +35,14 @@ public class UserWebClientBuilder {
 
         return false;
     }
-
-    // асинхронный метод для проверки наличия user
-
-    public Flux<UserData> userExistAsync(Long userId) {
-
-        Flux<UserData> userFlux = WebClient.create(baseUrlUser)
-                .post()
-                .uri("findById")
-                .bodyValue(userId)
-                .retrieve()
-                .bodyToFlux(UserData.class);
-        return userFlux;
-    }
-
     public Flux<Boolean> initUserData(Long userId) {
 
-        Flux<Boolean> userInit = WebClient.create(baseUrlData)
+        return WebClient.create(baseUrlData)
                 .post()
                 .uri("init")
                 .bodyValue(userId)
                 .retrieve()
                 .bodyToFlux(Boolean.class);
-
-        return userInit;
 
     }
 }

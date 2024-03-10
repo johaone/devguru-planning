@@ -7,11 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.devguru.springms.planner.todo.feign.UserFeignClient;
 import ru.devguru.springms.planner.todo.search.TaskSearchValues;
 import ru.devguru.springms.planner.todo.service.TaskService;
 import ru.devguru.springms.planner.entity.Task;
-import ru.devguru.springms.planner.entity.UserData;
+import ru.devguru.springms.planner.utils.webclient.UserWebClientBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +24,7 @@ public class TaskController {
     private static final String ID_COLUMN = "id"; // имя столбца
     private final TaskService taskService;
 
-    private final UserFeignClient userFeignClient;
+    private final UserWebClientBuilder userWebClientBuilder;
 
     /**Метод POST*/
     @PostMapping("/all")
@@ -50,18 +49,12 @@ public class TaskController {
             return new ResponseEntity("missed param: title MUST be NOT NULL", HttpStatus.NOT_ACCEPTABLE);
         }
 
-        ResponseEntity<UserData> result = userFeignClient.findUserById(task.getUserId());
-        if (result == null) { // если мс недоступен, возвращается null
-            return new ResponseEntity("система пользователей недоступна, попробуйте позднее!", HttpStatus.NOT_FOUND);
-        }
+        // так как БД разделены, foreign key на user нет, то может случиться добавление записи(задачи, категории) для несуществующего user
+        // проверка на наличие user: через WebClient
 
-        if (result.getBody() != null) {// если пользователь не пустой
+        if (userWebClientBuilder.userExistSync(task.getUserId())) {
             return ResponseEntity.ok(taskService.add(task));
         }
-
-        // Если выполнить после асинхронного метода проверки на наличие пользователя, то независимо есть такой user или нет,
-        // будет выходить "id не найден". Поэтому асинхронный метод не подходит
-        // А синхронный дожидается ответа и далее добавляет, либо выводит, что не нашел пользователя
         return new ResponseEntity("user id = " + task.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);
     }
 

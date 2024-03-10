@@ -11,12 +11,12 @@ import java.util.Objects;
 
 /*
 
-общая статистика по задачам (незвисимо от категорий задач)
+общая статистика по задачам (независимо от категорий задач)
 
  */
 
 @Entity
-@Table(name = "statistic", schema = "todo", catalog = "todo_affairs")
+@Table(name = "statistic", schema = "todolist", catalog = "planner_todo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

@@ -11,10 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableDiscoveryClient
 @ComponentScan(basePackages = {"ru.devguru.springms.planner"})
 @EnableJpaRepositories(basePackages = {"ru.devguru.springms.planner.users"})
-@RefreshScope // Позволяет динамически изменять состав настроек бинов (к примеру изменили настройки логирования в properties, поменяли значение переменной и т.д.)
-// Это позволяет избежать повторного перезапуска config, всех проектов, потом api-gateway
-// Но если изменения связаны с БД, с RabbitMQ, то желательно перезапускать все заново, так как настройки с GitHub считываются при старте
-// Для правильной работы RefreshScope должны быть добавлены настройки actuator(должен быть включен и включены все его endpoints)
 public class PlannerUsersApplication {
 
 	public static void main(String[] args) {

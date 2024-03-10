@@ -36,7 +36,7 @@ public class RoleData {
 	@JoinTable(name = "user_role",
 			joinColumns = @JoinColumn(name = "role_id"),
 			inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<ru.devguru.springms.planner.entity.UserData> userData;
+	private Set<UserData> userData;
 
 	@Override
 	public boolean equals(Object o) {

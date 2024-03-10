@@ -1,4 +1,4 @@
-package ru.javabegin.springms.todo.users.search;
+package ru.devguru.springms.planner.users.search;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

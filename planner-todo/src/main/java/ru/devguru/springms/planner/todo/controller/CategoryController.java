@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.devguru.springms.planner.todo.feign.UserFeignClient;
 import ru.devguru.springms.planner.todo.search.CategorySearchValues;
 import ru.devguru.springms.planner.todo.service.CategoryService;
 import ru.devguru.springms.planner.entity.Category;
-import ru.devguru.springms.planner.entity.UserData;
+import ru.devguru.springms.planner.utils.webclient.UserWebClientBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,11 +22,7 @@ import java.util.Optional;
 public class CategoryController {
     // Через DI нужно создать ссылку на сервис - доступ к БД
     private final CategoryService categoryService;
-
-    // ниже клиенты для вызова мс
-    private final UserFeignClient userFeignClient;
-//    private final UserRestBuilder userRestBuilder; // для синхронного вызова мс
-//    private final UserWebClientBuilder userWebClientBuilder; // как для синхронного так и для асинхронного вызова мс
+    private final UserWebClientBuilder userWebClientBuilder; // как для синхронного так и для асинхронного вызова мс
 
     /**
      * Метод POST
@@ -59,39 +54,11 @@ public class CategoryController {
         }
 
         // так как БД разделены, foreign key на user нет, то может случиться добавление записи(задачи, категории) для несуществующего user
-        // проверка на наличие user: через RestTemplate и WebClient(предпочтительнее)
+        // проверка на наличие user: через WebClient
 
-        //RESTTEMPLATE
-       /* if (userRestBuilder.userExist(category.getUserId())) { // вызов МС  из другого модуля (users)
-            return ResponseEntity.ok(categoryService.add(category)); // Так как add возвращает тип ResponseEntity<Category>, то результат - добавленный объект с заполненным ID
-        } */
-
-        //WEBCLIENT(sync)
-        /*if (userWebClientBuilder.userExistSync(category.getUserId())) {
-            return ResponseEntity.ok(categoryService.add(category));
-        }*/
-
-        //WEBCLIENT(async)
-//        userWebClientBuilder.userExistAsync(category.getUserId()).subscribe(user -> System.out.println("user = " + user));
-
-        // FEIGN interface (без Circuit Breaker)
-        /*if (userFeignClient.findUserById(category.getUserId()) != null)  {
-            return ResponseEntity.ok(categoryService.add(category));
-        }*/
-
-
-        // с применением CB
-        ResponseEntity<UserData> result = userFeignClient.findUserById(category.getUserId());
-        if (result == null) { // если мс недоступен, возвращается null
-            return new ResponseEntity("система пользователей недоступна, попробуйте позднее!", HttpStatus.NOT_FOUND);
-        }
-
-        if (result.getBody() != null) {// если пользователь не пустой
+        if (userWebClientBuilder.userExistSync(category.getUserId())) {
             return ResponseEntity.ok(categoryService.add(category));
         }
-
-        // Если выполнить после асинхронного метода проверки на наличие пользователя, то независимо есть такой user или нет, будет выходить "id не найден". Поэтому асинхронный метод не подходит
-        // А синхронный дожидается ответа и далее добавляет, либо выводит, что не нашел пользователя
         return new ResponseEntity("user id = " + category.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);
     }
 

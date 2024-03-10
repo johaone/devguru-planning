@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "priority", schema = "todo", catalog = "todo_affairs")
+@Table(name = "priority", schema = "todolist", catalog = "planner_todo")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

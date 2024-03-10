@@ -17,7 +17,7 @@ public class TestDataController {
 
     private final TestDataService testDataService;
 
-    @PostMapping("/initTestData")
+    @PostMapping("/init")
     public ResponseEntity<Boolean> initTestData(@RequestBody Long userId) {
 
         testDataService.init(userId);

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**РЕПОЗИТОРИИ НУЖНЫ ДЛЯ ТОГО, ЧТОБЫ SPRING СОЗДАЛ НУЖНЫЕ SQL ЗАПРОСЫ*/
 
-@Repository // Аннотация, указывающая, что это репозиторий для обращения к данным по Category
+@Repository // Аннотация, указывающая, что это репозиторий для обращения к данным по таблице Category
 // JpaRepository<T, ID> - интерфейс, который описывает все доступные методы/способы для обращения к данным. Наследуется от ряда других интерфейсов,
 // с расширенными методами для работы с данными
 public interface CategoryRepository extends JpaRepository<Category, Long > {
@@ -19,7 +19,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long > {
 
     //https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 
-    // В данной документации указано, что правильно указав название метода и поля, параметры, можно правильно создать
+    // В данной документации указано, что правильно указав название метода и поля, параметры, можно правильно создать метод
 
     // поиск категории пользователя по id
     List<Category> findByUserId(Long userId);
@@ -37,10 +37,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long > {
     List<Category> findByTitleOrUserId(@Param("title") String title, @Param("id") Long id);
 
     // Можно написать любой запрос через Query, затем в методе в аргументы через @Param можно указать нужные параметры
-
-
-
-
-
 }
 

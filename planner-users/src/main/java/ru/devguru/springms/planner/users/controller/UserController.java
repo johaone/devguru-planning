@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.devguru.springms.planner.entity.UserData;
-import ru.devguru.springms.planner.users.mq.functionalcode.MessageOutFunc;
+import ru.devguru.springms.planner.users.search.UserSearchValues;
 import ru.devguru.springms.planner.users.service.UserService;
-import ru.javabegin.springms.todo.users.search.UserSearchValues;
+import ru.devguru.springms.planner.utils.webclient.UserWebClientBuilder;
 
 import java.util.Optional;
 
@@ -21,11 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-//    private final UserWebClientBuilder userWebClientBuilder;
-
-//    private MessagePublisher messagePublisher; // для применения legacy
-    private final MessageOutFunc messagePublisher;
-
+    private final UserWebClientBuilder userWebClientBuilder;
     private static final String ID_COLUMN = "id"; // имя столбца
 
     /**
@@ -79,15 +75,13 @@ public class UserController {
 
         // создание тестовых данных для нового user через асинхронный вызов другого мс
 
-        /* if (user != null) {
-           // заполняем начальные данные пользователя (в параллельном потоке)
+        if (user != null) {
+            // заполняем начальные данные пользователя (в параллельном потоке)
             userWebClientBuilder.initUserData(user.getId()).subscribe(result -> {
                         System.out.println("user populated: " + result);
                     }
-            );*/
-
-        // создание тестовых данных для нового user через отправку сообщения в message broker(mq) - это асинхронный вызов
-        messagePublisher.sendMessage(user.getId()); // отправка сообщения по каналу отправки, что user создан
+            );
+        }
 
         return ResponseEntity.ok(user); // возвращаем созданный объект со сгенерированным id
 

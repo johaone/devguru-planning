@@ -5,10 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.devguru.springms.planner.entity.Priority;
-import ru.devguru.springms.planner.entity.UserData;
-import ru.devguru.springms.planner.todo.feign.UserFeignClient;
 import ru.devguru.springms.planner.todo.search.PrioritySearchValues;
 import ru.devguru.springms.planner.todo.service.PriorityService;
+import ru.devguru.springms.planner.utils.webclient.UserWebClientBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,7 @@ import java.util.Optional;
 public class PriorityController {
 
     private final PriorityService priorityService;
-    private final UserFeignClient userFeignClient;
+    private final UserWebClientBuilder userWebClientBuilder;
 
 
     /**Метод POST*/
@@ -44,15 +43,12 @@ public class PriorityController {
         }
 
 
-        ResponseEntity<UserData> result = userFeignClient.findUserById(priority.getUserId());
-        if (result == null) { // если мс недоступен, возвращается null
-            return new ResponseEntity("система пользователей недоступна, попробуйте позднее!", HttpStatus.NOT_FOUND);
-        }
+        // так как БД разделены, foreign key на user нет, то может случиться добавление записи(задачи, категории) для несуществующего user
+        // проверка на наличие user: через WebClient
 
-        if (result.getBody() != null) {// если пользователь не пустой
+        if (userWebClientBuilder.userExistSync(priority.getUserId())) {
             return ResponseEntity.ok(priorityService.add(priority));
         }
-
         return new ResponseEntity("user id = " + priority.getUserId() + " not found", HttpStatus.NOT_ACCEPTABLE);
     }
 

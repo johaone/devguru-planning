@@ -34,13 +34,8 @@ public class Activity { // название таблицы будет брать
     @Column(updatable = false)
     private String uuid; // создается только один раз с помощью триггера в БД
 
-    // Ссылки на таблицу пользователей уже не будет, так как БД была разделена
-
-    @OneToOne// LAZY для связки OneToOne не работает. Все равно выведет данные об активности при вызове пользователя
-    @MapsId
-    // Аннотация, работает в связке optional = false для полей связанных по типу OneToOne - это делается для работы ленивой загрузки, так как у типов связи OneToOne она не работает
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private ru.devguru.springms.planner.entity.UserData userDataId;
+    @Column(name="user_id")
+    private Long userId;
 
 
     @Override
